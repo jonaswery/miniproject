@@ -1,0 +1,54 @@
+﻿@model IList<Bertoni_MiniLab.Models.Album>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        Select an Album: 
+    </div>
+    <div class="col-md-4">
+        <select name="ddAlbums" id="ddAlbums">
+            @foreach (Bertoni_MiniLab.Models.Album m in Model) {
+                <option value="@m.id">@m.title</option>
+            }
+
+        </select>
+    </div>
+    <div class="col-md-4">
+        <button id="btnViewAlbum">View Album</button>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="partialPhoto">
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="partialComments">
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        //Load photo partial after album selection and empty comments section
+        $("#btnViewAlbum").click(function () {
+            $.get("https://" + window.location.host + "/home/getPhotos?albumId=" + $("#ddAlbums").val(), function (data) {
+                $("#partialPhoto").html(data);
+                $("#partialComments").html("");
+            });
+        });
+
+
+    });
+
+
+</script>
